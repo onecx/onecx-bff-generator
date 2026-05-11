@@ -1,17 +1,110 @@
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
-.mvn/timing.properties
-# https://maven.apache.org/wrapper/#usage-without-binary-jar
-.mvn/wrapper/maven-wrapper.jar
+# =========================================================
+# OS / system files
+# =========================================================
+.DS_Store
+Thumbs.db
+desktop.ini
 
-# Eclipse m2e generated files
-# Eclipse Core
-.project
-# JDT-specific (Eclipse Java Development Tools)
-.classpath
+# =========================================================
+# IDE / editors
+# =========================================================
+.idea/
+*.iml
+*.ipr
+*.iws
+
+.vscode/
+.history/
+
+*.swp
+*.swo
+*~
+
+# =========================================================
+# Logs
+# =========================================================
+*.log
+logs/
+hs_err_pid*
+replay_pid*
+
+# =========================================================
+# Environment / secrets
+# =========================================================
+.env
+.env.*
+*.local
+*.secret
+*.secrets
+
+# =========================================================
+# Maven / Java build output
+# =========================================================
+target/
+*/target/
+out/
+build/
+!target/quarkus-app/
+!target/quarkus-app/**
+
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+# Keep Maven wrapper files tracked
+!.mvn/wrapper/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.properties
+!mvnw
+!mvnw.cmd
+
+# Optional Maven cache artifacts
+.mvn/timing.properties
+
+# =========================================================
+# Quarkus
+# =========================================================
+.quarkus/
+.quarkus-cli/
+application-local.properties
+application-dev.properties
+
+# =========================================================
+# JBang / local launcher experiments
+# =========================================================
+*:Zone.Identifier
+.jbang/
+jbang-catalog.json.bak
+
+# =========================================================
+# Temporary generated test projects
+# (jeśli będziesz testował generator w repo)
+# =========================================================
+tmp/
+tmp-generated/
+sandbox/
+test-output/
+generated/
+generated-projects/
+
+# Example generated OneCX services created for local testing
+onecx-demo-svc/
+*-svc/
+
+# =========================================================
+# Archives
+# =========================================================
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+
+# =========================================================
+# Misc temp files
+# =========================================================
+temp/
+*.tmp
+*.bak
+*.orig

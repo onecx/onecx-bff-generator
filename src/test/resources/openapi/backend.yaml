@@ -1,0 +1,16 @@
+openapi: 3.0.3
+info:
+  title: Backend API
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    UserInternal:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+
