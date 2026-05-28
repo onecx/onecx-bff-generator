@@ -64,9 +64,6 @@ public class GeneratorService {
         Map<String, List<OperationModel>> frontendControllers = openApiAnalyzer.extractControllers(frontendApi);
         Map<String, List<OperationModel>> backendControllers = openApiAnalyzer.extractControllers(backendApi);
         ControllerSelection controllerSelection = selectControllers(frontendControllers, backendControllers, frontendSchemas);
-        String backendApiSource = request.backendApi();
-        boolean backendIsUrl = backendApiSource != null && (backendApiSource.startsWith("http://") || backendApiSource.startsWith("https://"));
-        String backendApiUrl = backendIsUrl ? backendApiSource : null;
         projectWriter.writePom(projectDir, request.projectName(), request.groupId(), artifactId, parentVersion, profile,
                 basePackage, frontendFile.getFileName().toString(), backendApiUri, backendFile.getFileName().toString());
         projectWriter.writeApplicationFiles(projectDir, request.projectName(), request.groupId(), basePackage,

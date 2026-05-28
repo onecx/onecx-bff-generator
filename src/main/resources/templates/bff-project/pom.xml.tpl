@@ -105,6 +105,26 @@ ${legacyJunitDependencies}${legacySwaggerParser}    </dependencies>
             </plugin>
 ${backendDownloadPlugin}
             <plugin>
+                <groupId>com.googlecode.maven-download-plugin</groupId>
+                <artifactId>download-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>download-backend-api</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <uri>${backendApiUrl}</uri>
+                            <outputFileName>${backendApiFileName}</outputFileName>
+                            <outputDirectory>${project.basedir}/src/main/openapi/backend</outputDirectory>
+                            <overwrite>true</overwrite>
+                            <skipCache>true</skipCache>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
                 <executions>
