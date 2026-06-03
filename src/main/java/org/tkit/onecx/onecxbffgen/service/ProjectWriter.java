@@ -225,6 +225,7 @@ public class ProjectWriter {
 
             // Collect all imports
             Set<String> imports = new LinkedHashSet<>();
+            imports.add("org.mapstruct.BeanMapping");
             imports.add("gen." + pkg + ".backend.client.model." + targetType);
 
             // Build a set of frontend DTO types that have cross-type mappings from operations
@@ -267,7 +268,7 @@ public class ProjectWriter {
                             ? targetType + " toBackend(" + sourceModelType + " source)"
                             : targetType + " map(" + sourceModelType + " source)";
                     if (addedSignatures.add(sig1)) {
-                        mapMethods.append("    ").append(sig1).append(";\n");
+                        mapMethods.append("    @BeanMapping(ignoreByDefault = true)\n    ").append(sig1).append(";\n");
                     }
                 }
                 // map backend → DTO (only for plain entity, not Request/Criteria/Response)
@@ -277,7 +278,7 @@ public class ProjectWriter {
                             ? sourceModelType + " toFrontend(" + targetType + " source)"
                             : sourceModelType + " map(" + targetType + " source)";
                     if (addedSignatures.add(sig2)) {
-                        mapMethods.append("    ").append(sig2).append(";\n");
+                        mapMethods.append("    @BeanMapping(ignoreByDefault = true)\n    ").append(sig2).append(";\n");
                     }
                 }
             }
@@ -289,7 +290,7 @@ public class ProjectWriter {
                     : plainDtoType + " map(" + targetType + " source)";
             addedSignatures.add(sigPlain);
             if (!mapMethods.toString().contains(sigPlain + ";")) {
-                mapMethods.append("    ").append(sigPlain).append(";\n");
+                mapMethods.append("    @BeanMapping(ignoreByDefault = true)\n    ").append(sigPlain).append(";\n");
             }
 
             // --- cross-type mappings from operations ---
@@ -310,7 +311,7 @@ public class ProjectWriter {
                             imports.add("gen." + pkg + ".backend.client.model." + beReqType);
                             String crossSig = beReqType + " map(" + feReqType + " source)";
                             if (addedSignatures.add(crossSig)) {
-                                mapMethods.append("    ").append(crossSig).append(";\n");
+                                mapMethods.append("    @BeanMapping(ignoreByDefault = true)\n    ").append(crossSig).append(";\n");
                             }
                         }
                     }
@@ -328,7 +329,7 @@ public class ProjectWriter {
                             imports.add("gen." + pkg + ".backend.client.model." + beRespType);
                             // Named method: toSearchProductResponse, toCreateProductResponse, etc.
                             String namedMethod = responseMapperMethodName(op.operationId(), feRespRaw);
-                            String namedSig = "@org.mapstruct.Named(\"" + namedMethod + "\")\n    " + feRespType + " " + namedMethod + "(" + beRespType + " source)";
+                            String namedSig = "@BeanMapping(ignoreByDefault = true)\n    " + feRespType + " " + namedMethod + "(" + beRespType + " source)";
                             if (addedSignatures.add(namedMethod)) {
                                 mapMethods.append("    ").append(namedSig).append(";\n");
                             }
