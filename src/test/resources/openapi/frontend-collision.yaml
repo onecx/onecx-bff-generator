@@ -1,0 +1,22 @@
+openapi: 3.0.3
+info:
+  title: Frontend Collision API
+  version: 1.0.0
+paths:
+  /categories:
+    get:
+      operationId: getCategories
+      tags:
+        - Categories
+      responses:
+        "200":
+          description: ok
+components:
+  schemas:
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string

@@ -1,0 +1,19 @@
+openapi: 3.0.3
+info:
+  title: Frontend API Without Paths
+  version: 1.0.0
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    ProductSearchCriteria:
+      type: object
+      properties:
+        query:
+          type: string

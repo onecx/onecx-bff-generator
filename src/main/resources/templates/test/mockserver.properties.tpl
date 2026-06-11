@@ -1,0 +1,10 @@
+mockserver.initializationJsonPath=/mockserver/*.json
+mockserver.watchInitializationJson=true
+mockserver.log=true
+
+# Certificate Generation
+mockserver.dynamicallyCreateCertificateAuthorityCertificate=true
+mockserver.directoryToSaveDynamicSSLCertificate=.
+mockserver.sslCertificateDomainName=localhost
+mockserver.sslSubjectAlternativeNameDomains=www.example.com,www.another.com
+mockserver.sslSubjectAlternativeNameIps=127.0.0.1

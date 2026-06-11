@@ -1,0 +1,40 @@
+openapi: 3.0.3
+info:
+  title: Backend Product API
+  version: 1.0.0
+paths:
+  /products/search:
+    post:
+      operationId: searchProducts
+      tags:
+        - Product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductSearchCriteriaDTO'
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDTO'
+components:
+  schemas:
+    ProductDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    ProductSearchCriteriaDTO:
+      type: object
+      properties:
+        query:
+          type: string

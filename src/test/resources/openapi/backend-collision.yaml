@@ -1,0 +1,14 @@
+openapi: 3.0.3
+info:
+  title: Backend Collision API
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string

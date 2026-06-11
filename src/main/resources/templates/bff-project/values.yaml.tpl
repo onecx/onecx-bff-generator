@@ -1,0 +1,25 @@
+app:
+  name: bff
+  image:
+    repository: "onecx/${artifactId}"
+  operator:
+    # Permission
+    permission:
+      enabled: true
+      spec:
+        permissions:
+          ${permissionKey}:
+            read: permission on all GET requests and POST search
+            write: permission on PUT, POST, PATCH requests, where objects are saved or updated
+            delete: permission on all DELETE requests
+    keycloak:
+      client:
+        enabled: true
+        spec:
+          kcConfig:
+            defaultClientScopes: [ ${defaultScopes} ]
+    microservice:
+      spec:
+        description: ${projectName}
+        name: ${projectName}
+
