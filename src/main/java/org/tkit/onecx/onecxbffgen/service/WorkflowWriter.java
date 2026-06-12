@@ -45,7 +45,6 @@ public class WorkflowWriter {
     // -------------------------------------------------------------------------
     // dependabot
     // -------------------------------------------------------------------------
-
     private void writeDependabot(Path projectDir) throws IOException {
         String content = """
                 version: 2

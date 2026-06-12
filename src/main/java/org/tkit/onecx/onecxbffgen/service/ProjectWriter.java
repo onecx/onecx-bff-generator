@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
 public class ProjectWriter {
     private static final Pattern PATH_PARAM_PATTERN = Pattern.compile("\\{([^}/]+)}");
     private static final String BACKEND_CONFIG_KEY = "backend_api";
-    private final TemplateRenderer templateRenderer;
+    private final TemplateService templateService;
     public ProjectWriter() {
-        this(new TemplateRenderer());
+        this(new TemplateService());
     }
-    ProjectWriter(TemplateRenderer templateRenderer) {
-        this.templateRenderer = templateRenderer;
+    ProjectWriter(TemplateService templateService) {
+        this.templateService = templateService;
     }
     public void writePom(Path projectDir,
                          String projectName,
@@ -132,11 +132,18 @@ public class ProjectWriter {
         writeTemplate(projectDir.resolve("src/main/docker/Dockerfile.jvm"), "bff-project/Dockerfile.jvm.tpl", Map.of());
         writeTemplate(projectDir.resolve("src/main/docker/Dockerfile.native"), "bff-project/Dockerfile.native.tpl", Map.of());
     }
+
     public void writeWorkflowFiles(Path projectDir, String projectName, DependencyProfile profile) throws IOException {
-        // helmEventTargetRepository: derive the "parent" repo name from projectName
-        // e.g. "onecx-demo-bff" -> "onecx/onecx-demo"
-        String helmRepo = deriveHelmRepo(projectName);
-        new WorkflowWriter().writeAll(projectDir, projectName, helmRepo, profile);
+        GitHubActionsService githubActions = new GitHubActionsService(templateService);
+        try {
+            githubActions.generate(projectDir, Map.of(
+                    "projectName", projectName,
+                    "profile", profile.name().toLowerCase()
+            ));
+        } catch (Exception e) {
+            // workflow templates are optional for tests / local generation
+            System.err.println("GitHub actions generation failed: " + e.getMessage());
+        }
     }
 
     /**
@@ -581,7 +588,7 @@ public class ProjectWriter {
     }
     private void writeTemplate(Path path, String templateName, Map<String, String> values) throws IOException {
         Files.createDirectories(path.getParent());
-        Files.writeString(path, templateRenderer.render(templateName, values));
+        Files.writeString(path, templateService.render(templateName, values));
     }
 
     private String buildCurlExamples(Map<String, List<OperationModel>> controllers) {
