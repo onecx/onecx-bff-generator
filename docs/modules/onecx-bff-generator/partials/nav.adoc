@@ -1,4 +1,4 @@
-* xref:documentation:onecx-bff-generator:index.adoc[Onecx BFF Generator]
+* xref:documentation:onecx-bff-generator:index.adoc[BFF Generator]
 ** xref:documentation:onecx-bff-generator:generator/create-bff.adoc[Create a Backend for Frontend]
 
 ** xref:documentation:onecx-bff-generator:generator/review-api-mappings.adoc[Review and Customize API Mappings]
