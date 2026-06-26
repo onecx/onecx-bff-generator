@@ -8,6 +8,8 @@ endif::[]
 What is a Backend for Frontend?::
 include::../../partials/_glossary.adoc[tag=backend-for-frontend]
 
+more details about BFF you can find in the link below:
+https://onecx.github.io/docs/documentation/current/docs-guides-quarkus/quarkus-bff.html
 
 [NOTE]
 ====
