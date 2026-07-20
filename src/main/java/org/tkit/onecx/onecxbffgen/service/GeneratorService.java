@@ -37,10 +37,10 @@ public class GeneratorService {
 
     public Path generate(GenerateRequest request) throws IOException, InterruptedException {
         String artifactId = sanitizeArtifactId(request);
-        LatestVersionResolver.ResolvedVersion parentResolved = versionResolver.resolveLatestWithSource("onecx/onecx-quarkus3-parent", "3.1.0", request.githubToken());
-        LatestVersionResolver.ResolvedVersion dockerJvmResolved = versionResolver.resolveLatestWithSource("onecx/docker-quarkus-jvm", "1.4.0", request.githubToken());
-        LatestVersionResolver.ResolvedVersion dockerNativeResolved = versionResolver.resolveLatestWithSource("onecx/docker-quarkus-native", "1.4.0", request.githubToken());
-        LatestVersionResolver.ResolvedVersion helmResolved = versionResolver.resolveLatestWithSource("onecx/helm-quarkus-app", "0.42.0", request.githubToken());
+        LatestVersionResolver.ResolvedVersion parentResolved = versionResolver.resolveLatestWithSource("onecx/onecx-quarkus3-parent", "3.1.0");
+        LatestVersionResolver.ResolvedVersion dockerJvmResolved = versionResolver.resolveLatestWithSource("onecx/docker-quarkus-jvm", "1.4.0");
+        LatestVersionResolver.ResolvedVersion dockerNativeResolved = versionResolver.resolveLatestWithSource("onecx/docker-quarkus-native", "1.4.0");
+        LatestVersionResolver.ResolvedVersion helmResolved = versionResolver.resolveLatestWithSource("onecx/helm-quarkus-app", "0.42.0");
 
         String parentVersion = parentResolved.version();
         String dockerJvmVersion = dockerJvmResolved.version();
@@ -389,12 +389,4 @@ public class GeneratorService {
         Files.writeString(projectDir.resolve("generation-report.json"), report);
     }
 }
-
-
-
-
-
-
-
-
 

@@ -35,9 +35,6 @@ public class CreateBffCommand implements Runnable {
     @CommandLine.Option(names = "--output-dir", defaultValue = ".", description = "Output directory for generated project")
     Path outputDir;
 
-    @CommandLine.Option(names = "--github-token", description = "GitHub token used to resolve latest dependency versions")
-    String githubToken;
-
     @CommandLine.Option(names = "--autobuild", defaultValue = "false",
             description = "Run mvn -B -ntp -DskipTests clean package in generated project")
     boolean autoBuild;
@@ -59,7 +56,6 @@ public class CreateBffCommand implements Runnable {
                 frontendApi,
                 backendApi,
                 outputDir,
-                githubToken,
                 autoBuild
         );
 
@@ -71,9 +67,3 @@ public class CreateBffCommand implements Runnable {
         }
     }
 }
-
-
-
-
-
-

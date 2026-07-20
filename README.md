@@ -36,8 +36,6 @@ mvn test
 ## Using the Generator
 
 The generator automatically fetches the latest release versions of `onecx-quarkus3-parent`, `docker-quarkus-jvm`, `docker-quarkus-native`, and `helm-quarkus-app` from GitHub at generation time.
-
-Without authentication, GitHub allows around 60 API requests per hour. To increase this to 5000 requests/hour, either set `GITHUB_TOKEN` or pass `--github-token`.
 ### Show help
 ```bash
 java -jar target/onecx-bff-generator-1.0.0-SNAPSHOT-runner.jar --help
@@ -53,20 +51,7 @@ java -jar target/onecx-bff-generator-1.0.0-SNAPSHOT-runner.jar create-bff --help
 | `--frontend-api` | Path or URL to the frontend OpenAPI spec | required |
 | `--backend-api` | Path or URL to the backend OpenAPI spec | required |
 | `--output-dir` | Output directory | current directory |
-| `--github-token` | Optional GitHub token used to resolve latest dependency versions | env/none |
 | `--autobuild` | Run `mvn -B -ntp -DskipTests clean package` after generation | false |
-
-Example with explicit token:
-
-```bash
-java -jar target/onecx-bff-generator-1.0.0-SNAPSHOT-runner.jar create-bff \
-  --name onecx-demo-bff \
-  --group org.tkit.onecx \
-  --package org.tkit.onecx.demo \
-  --frontend-api /path/to/frontend/openapi-bff.yaml \
-  --backend-api /path/to/backend/openapi-svc-internal.yaml \
-  --github-token ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-```
 ---
 ## Generating a Project (from any location to any location)
 Use the absolute path to the JAR and provide absolute paths for the API specs and output directory:
