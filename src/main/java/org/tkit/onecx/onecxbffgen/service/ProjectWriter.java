@@ -3,8 +3,10 @@ package org.tkit.onecx.onecxbffgen.service;
 import org.tkit.onecx.onecxbffgen.model.OperationModel;
 import org.tkit.onecx.onecxbffgen.model.SchemaModel;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -146,6 +148,41 @@ public class ProjectWriter {
         } catch (Exception e) {
             // workflow templates are optional for tests / local generation
             System.err.println("GitHub actions generation failed: " + e.getMessage());
+        }
+    }
+
+    public void writePreCommitHook(Path projectDir) throws IOException, InterruptedException {
+        try (InputStream hook = Thread.currentThread().getContextClassLoader()
+                .getResourceAsStream("hooks/pre-commit")) {
+            if (hook == null) {
+                System.err.println("Pre-commit hook not bundled in this build; use a release JAR to include it.");
+                return;
+            }
+            Path output = projectDir.resolve(".githooks/pre-commit");
+            Files.createDirectories(output.getParent());
+            Files.copy(hook, output, StandardCopyOption.REPLACE_EXISTING);
+            if (!output.toFile().setExecutable(true, false)) {
+                throw new IOException("Could not make pre-commit hook executable: " + output);
+            }
+            if (!Files.exists(projectDir.resolve(".git"))) {
+                runGitCommand(projectDir, "init", "--quiet");
+            }
+            runGitCommand(projectDir, "config", "--local", "core.hooksPath", ".githooks");
+            System.out.println("Enabled pre-commit hook: " + output);
+        }
+    }
+
+    private void runGitCommand(Path projectDir, String... arguments) throws IOException, InterruptedException {
+        List<String> command = new ArrayList<>();
+        command.add("git");
+        command.addAll(List.of(arguments));
+        ProcessBuilder processBuilder = new ProcessBuilder(command);
+        processBuilder.directory(projectDir.toFile());
+        processBuilder.inheritIO();
+        int exitCode = processBuilder.start().waitFor();
+        if (exitCode != 0) {
+            throw new IOException(String.join(" ", command) + " failed with exit code " + exitCode
+                    + " in " + projectDir);
         }
     }
 

@@ -26,6 +26,18 @@ The output JAR is created at:
 ```
 target/onecx-bff-generator-1.0.0-SNAPSHOT-runner.jar
 ```
+
+Release builds use `gh` with the `CI_PAT` secret to fetch the Maven pre-commit
+hook from the latest published release of `onecx/onecx-ai-workflows` before
+packaging. The hook is bundled in the JAR, not committed to this repository,
+and copied unchanged to `.githooks/pre-commit` at the end of project generation
+with executable permissions. The generator initializes a Git repository in the
+project directory if needed and enables the hook automatically using
+`git config --local core.hooksPath .githooks`. Git must be installed. No hook
+download or token is needed at generation time. Local builds without the
+downloaded resource print a warning and omit the hook and Git setup.
+
+The hook runs Maven QA checks only when `CI` or `FORCE_CI_COMMIT_HOOKS` is set.
 ---
 ## Running Generator Tests
 ```bash

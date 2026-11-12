@@ -102,6 +102,7 @@ public class GeneratorService {
                 backendServiceName, parentVersion,
                 dockerJvmVersion, dockerNativeVersion, helmVersion,
                 frontendSchemas, backendSchemas, controllerSelection.controllers());
+        projectWriter.writePreCommitHook(projectDir);
         System.out.println("Generated BFF '" + request.projectName() + "' in: " + projectDir.toAbsolutePath());
         System.out.println("▶ Resolved generator versions:");
         System.out.println("  onecx-quarkus3-parent : " + formatResolved(parentResolved));
